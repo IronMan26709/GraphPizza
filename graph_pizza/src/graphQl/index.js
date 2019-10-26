@@ -3,7 +3,7 @@ import { GraphQLClient } from "graphql-request";
 
 export let gql;
 
-export const GetToken = () =>{
+export const getToken = () =>{
     if( localStorage.jwtToken){
         return (gql = new GraphQLClient( "/graphql",{
             headers: {Autorisation: `Bearer${localStorage.jwtToken}`}

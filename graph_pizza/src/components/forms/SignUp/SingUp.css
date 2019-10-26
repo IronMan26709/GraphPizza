@@ -1,0 +1,34 @@
+.singup-container {
+    width: 100%;
+    text-align: center;
+    padding: 2% 0;
+    margin: 2.5% 0%;
+}
+
+.singup-container > h2 {
+    font-size: 25px;
+}
+
+.singup-container > form {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+}
+
+.singup-container > form > .control-input {
+    margin: 0 auto 2% auto;
+    width: 50%;
+}
+
+.singup-container > form > .control-input > .singup-input {
+    width: 100%;
+    padding: 2% 1%;
+    font-size: 15px;
+    border: none;
+    outline: none;
+}
+
+.singup-container > .error-container { 
+    margin-top: 2%;
+    font-size: 25px;
+}
