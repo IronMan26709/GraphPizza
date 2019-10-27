@@ -6,9 +6,9 @@ import { Registration }  from '../../actions/userAction';
 
 
 const SignUpComponent = props =>{
-    const handelSubmit = e =>{
-    //    console.log(e) 
-        props.Registration(e)
+    const handelSubmit = values =>{
+    //    console.log(values)
+        props.Registration(values)
     }
     return(
         <SignUpForm onSubmit={handelSubmit}/>
@@ -16,7 +16,7 @@ const SignUpComponent = props =>{
 }
 
 const mapDispatchToProps = dispatch => ({
-    Registration: () => dispatch(Registration())
+    Registration: e => dispatch(Registration(e))
   });
 
 export default connect(null,mapDispatchToProps)(SignUpComponent)

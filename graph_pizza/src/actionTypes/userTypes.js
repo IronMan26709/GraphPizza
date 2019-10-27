@@ -3,5 +3,10 @@ export  const USER_SIGN_UP_SUCCESS = "USER_SIGN_UP_SUCCESS";
 export  const USER_SIGN_UP_FAIL = "USER_SIGN_UP_FAIL";
 
 
+export  const USER_LOG_IN_REQUEST = "USER_LOG_IN_REQUEST";
+export  const USER_LOG_IN_SUCCESS = "USER_LOG_IN_SUCCESS";
+export  const USER_LOG_IN_FAIL = "USER_LOG_IN_FAIL";
+
+
 export const USER_LOG_IN = "USER_LOG_IN";
 

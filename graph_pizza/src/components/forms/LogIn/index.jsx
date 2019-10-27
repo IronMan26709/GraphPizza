@@ -1,23 +1,15 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-// import './SignUp.css';
 
 import { renderField } from '../../renderField';
 import Button from '../../Button/Button';
 
 
-const SignUpForm = props =>{
+const LogInForm = props =>{
     const{ handleSubmit } = props;
     return (
         <form onSubmit={handleSubmit}>
-            <Field
-                name="nick"
-                component={renderField}
-                placeholder="Ваше имя"
-                type="text"
-                className="signup-input"
-            />
             <Field
                 name="login"
                 component={renderField}
@@ -32,15 +24,8 @@ const SignUpForm = props =>{
                 className="signup-input"
                 type="password"
             />
-            <Field
-                name="confirmPassword"
-                component={renderField}
-                placeholder="Повторите пароль"
-                className="signup-input"
-                type="password"
-            />
-            <Button text="Регистрация"/>
+            <Button text="Войти"/>
         </form>
     )
 }
-export default reduxForm({form: "signup",})(SignUpForm)
+export default reduxForm({form: "logIn",})(LogInForm)
