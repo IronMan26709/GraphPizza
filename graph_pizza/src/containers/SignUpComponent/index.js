@@ -7,7 +7,7 @@ import { Registration }  from '../../actions/userAction';
 
 const SignUpComponent = props =>{
     const handelSubmit = e =>{
-    //    console.log(props) 
+    //    console.log(e) 
         props.Registration(e)
     }
     return(
@@ -15,4 +15,8 @@ const SignUpComponent = props =>{
     )
 }
 
-export default connect(null,{ Registration })(SignUpComponent)
+const mapDispatchToProps = dispatch => ({
+    Registration: () => dispatch(Registration())
+  });
+
+export default connect(null,mapDispatchToProps)(SignUpComponent)
