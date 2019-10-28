@@ -77,28 +77,40 @@ export const Registration = payload => async dispatch => {
 }
 
 
-
-export const GetUserInfo = payload => async dispatch => {
+export const GetUserInfo = () => async dispatch => {
     getToken();
-    const ID = localStorage._id
+    console.log(gql)
     const data = await gql.request(
-        `query FindUser {
-            UserFind (query : "[]"){
+        `query Users{
+            UserFind (query:"[{}]"){
+                _id,
                 login,
-                nich,
-                _id
-            }
-        }`
+                nick
+                }
+            }`
     );
-    try{
-        console.log(data)
-        // localStorage.setItem("JwtToken", data.login)
-        // dispatch(LogInSuccess(data.login));
-        // dispatch(LogInRequest(true));
-    } catch (er) {
-        // dispatch(LogInFail(er))
-    }
-
+    console.log(data)
 }
+
+// export const GetUserInfo = payload => async dispatch => {
+//     getToken();
+//     console.log(gql)
+//     console.log("localStorage.JwtToken",localStorage.JwtToken)
+//     const ID = { _id :  String(localStorage.getItem("_id") ) }
+//     const data = await gql.request(
+//         `query FindUser ($query : String!) {
+//             UserFind (query :"[{}]") { login}
+//         }`,
+//     );
+//     try{
+//         console.log(data)
+//         // localStorage.setItem("JwtToken", data.login)
+//         // dispatch(LogInSuccess(data.login));
+//         // dispatch(LogInRequest(true));
+//     } catch (er) {
+//         // dispatch(LogInFail(er))
+//     }
+
+// }
 
 
