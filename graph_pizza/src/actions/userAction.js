@@ -76,6 +76,16 @@ export const Registration = payload => async dispatch => {
 }
 
 
+
+
+
+
+
+
+
+
+// Получаем всех юзеров
+
 export const GetUsersInfo = () => async dispatch => {
     getToken();
     console.log(gql)
@@ -93,17 +103,137 @@ export const GetUsersInfo = () => async dispatch => {
     console.log(data.UserFind)
 }
 
-// export const GetUserInfo = payload => async dispatch => {
-//     getToken();
-//     console.log(gql)
-//     console.log("localStorage.JwtToken",localStorage.JwtToken)
-//     const ID = { _id :  String(localStorage.getItem("_id") ) }
-//     const data = await gql.request(
-//         `query FindUser ($query : String!) {
-//             UserFind (query :"[{}]") { login}
-//         }`,
-//     );
-//         console.log()
-// }
 
 
+
+
+
+
+
+
+// Получаем все товары
+
+export const GetGoods = payload => async dispatch => {
+    getToken();
+    const data = await gql.request(
+        `query FindGoods  {
+            GoodFind (query: "[{}]") {
+                _id,
+                price,
+                description,
+                categories{
+                    name},
+                images{
+                        _id,
+                        text,
+                        url
+                    }
+            }
+        }`
+    );
+        console.log(data.GoodFind)
+}
+
+
+
+
+// Получаем катигорию по Id
+export const GetCategoriById = payload => async dispatch => {
+    console.log(payload)
+    getToken()
+    const data = await gql.request(
+        `   query Category ($query : String!) {
+            CategoryFindOne(query:$query){
+              _id,
+              name,
+              goods{
+                name,
+                description,
+                price
+              }
+            }
+          }` 
+          , { query : JSON.stringify([{ _id : payload}]) }
+    );
+    console.log(data)
+}
+
+
+
+
+
+// Получаем товар по Id
+export const GetGoodOnlyOneById = payload => async dispatch => {
+    getToken()
+    const Id = payload
+    console.log("payload", Id)
+    const data = await gql.request(
+       ` query ($query : String!){
+            GoodFindOne(query: $query){
+                _id,
+                name,
+                price
+          }
+        }`,{ query : JSON.stringify([{_id :Id}])
+        }
+    );console.log(data.GoodFindOne)
+}
+
+
+// Список товаров конкретного юзера
+
+export const GetUsersGoods = payload => async dispatch => {
+    getToken()
+    const Id = payload === "" ? "5db5835dc2894c20669bfc89" : payload
+    const data = await gql.request(
+       ` query ($query : String!){
+            GoodFind(query: $query){
+                _id,
+                name,
+                price
+          }
+        }`,{ query : JSON.stringify([{_id :Id}])
+        }
+    );console.log(data.GoodFind)
+}
+
+
+
+
+
+
+export const GetAllPhotos = payload => async dispatch => {
+    getToken()
+    const data = await gql.request(
+        `query ImageFind{
+            ImageFind(query: "[{}]"){
+                _id,
+                url,
+                owner {login, _id}
+            }
+        }`
+    );
+    console.log(data.ImageFind)
+}
+
+
+
+// Получить всё фото юзера по его Id
+
+export const GetOWnersPhotos = payload => async dispatch => {
+    getToken()
+    const owner1 = payload === "" ? "5db5835dc2894c20669bfc89"  : payload
+    
+    const data = await gql.request(
+       ` query ($query : String!){
+        ImageFind(query: $query){
+                _id,
+                url,
+                owner{ login, _id }
+          }
+        }`,{   
+            query: JSON.stringify([{ ___owner: owner1 }])
+        }
+            
+    );console.log(data.ImageFind)
+}
