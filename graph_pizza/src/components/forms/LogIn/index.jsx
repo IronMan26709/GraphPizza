@@ -15,7 +15,7 @@ const LogInForm = props =>{
                 component={renderField}
                 placeholder="Ваш email"
                 className="signup-input"
-                type="email"
+                type="text"
             />
              <Field
                 name="password"

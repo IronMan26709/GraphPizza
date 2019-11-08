@@ -1,13 +1,17 @@
 import React,{ useState }  from "react";
 import { connect } from "react-redux";
 import LogInForm from "../../components/forms/LogIn";
-import { Auth, GetUsersInfo, GetGoods,GetCategoriById,GetAllPhotos,GetOWnersPhotos,GetUsersGoods } from "../../actions/userAction";
-import Button from "../../components/Button/Button";
+import { Auth, GetUsersInfo,
+   GetGoods,
+   GetCategoriById,
+   GetAllPhotos,
+   GetOWnersPhotos,
+   GetUsersGoods,
+   UserUpsert } from "../../actions/userAction";
 
 const LogInComponent = props => {
    const [ Val, setInpVal ] = useState( "" )
   const handelSubmit = values => {
-    //    console.log(values)
     props.Auth(values);
   };
   const click = () => {
@@ -18,36 +22,37 @@ const LogInComponent = props => {
   };
 
   const changeCategories = event => {
-      console.log( event.currentTarget.value )
       setInpVal(event.currentTarget.value )
     
   };
   const clickInput = () =>{
-      console.log("input",Val)
     props.GetCategoriById(Val)
   } 
+  
   const photoOnchange  =  async  event => {
     event.preventDefault()
-    console.log(event.currentTarget)
     fetch('/upload', {
         method: "POST",
-        headers: localStorage.JwtToken ? {Authorization: 'Bearer ' + localStorage.JwtToken} : {},
-        body: new FormData(event.currentTarget)
-    })  
-  } 
+        headers: localStorage.JwtToken ? {Authorization: 'Bearer '  +localStorage.JwtToken} : {},
+        body:  new FormData(event.currentTarget)
+    })
+    console.log(event.currentTarget)
+  }  
 
 
   
   const getPhotos = () =>{
-    console.log("клик")
-    props.GetAllPhotos()
-  }
+    // props.GetAllPhotos()
+  } 
  
   const getMyPhotos = () =>{
-    
     props.GetOWnersPhotos(Val)
   }
 
+
+  const UpsertUser = () =>{
+    props.UserUpsert(Val)
+  }
 
 
 const getUsersOrders = () => {
@@ -73,10 +78,14 @@ const getUsersOrders = () => {
         <input type="file" name="photo" id='photo'/>
         <button>SUBMIT</button>
       </form>
-
+{/* 
       <button onClick={getPhotos}>GetAllPhotos</button>
-      <button onClick={getMyPhotos}>My Photos</button>
+      <button onClick={getMyPhotos}>My Photos</button> */}
       <button onClick={getUsersOrders}>UsersOrders </button>
+
+      <div className="upsert_user" >
+        <button onClick={UpsertUser}>Upsert user</button>
+      </div>
 
     </>
   );
@@ -85,11 +94,12 @@ const getUsersOrders = () => {
 const mapDispatchToProps = dispatch => ({
   Auth: e => dispatch(Auth(e)),
   GetUsersInfo: e => dispatch(GetUsersInfo(e)),
-  GetGoods: e => dispatch(GetGoods(e)),
+  GetGoods: () => dispatch(GetGoods()),
   GetCategoriById: e =>dispatch(GetCategoriById(e)),
-  GetAllPhotos: e =>dispatch(GetAllPhotos(e)),
-  GetOWnersPhotos: e =>dispatch(GetOWnersPhotos(e)),
-  GetUsersGoods: e =>dispatch(GetUsersGoods(e))  
+  // GetAllPhotos: e =>dispatch(GetAllPhotos(e)),
+  // GetOWnersPhotos: e =>dispatch(GetOWnersPhotos(e)),
+  GetUsersGoods: e =>dispatch(GetUsersGoods(e)),  
+  UserUpsert : e => dispatch( UserUpsert (e))
 });
 
 export default connect(

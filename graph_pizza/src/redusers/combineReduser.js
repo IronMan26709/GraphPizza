@@ -3,10 +3,12 @@ import { reducer as formReducer } from "redux-form";
 import  thunk  from 'redux-thunk';
   
 import userReducer from './userReducer';
+import orderReducer from './orderReducer';
 
 
 const rootReducer = combineReducers({
     userReducer,
+    orderReducer,
     form: formReducer,
 });
 

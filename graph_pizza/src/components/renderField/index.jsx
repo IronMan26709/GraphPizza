@@ -4,7 +4,8 @@ import { Error } from '../Error'
 export const renderField = ({ input, autoComplete, type, placeholder, className, meta: { touched, error } }) => {
     return (
         <div className='control-input'>
-            <input {...input} autoComplete={autoComplete} type={type} placeholder={placeholder} className={className} />
+            <label>{placeholder}</label>
+            <input {...input} autoComplete={autoComplete} type={type} className={className} />
             { touched && error && <Error text={error} />}
         </div>
     )

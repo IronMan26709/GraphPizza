@@ -11,13 +11,13 @@ const SignUpForm = props =>{
     const{ handleSubmit } = props;
     return (
         <form onSubmit={handleSubmit}>
-            <Field
+            {/* <Field
                 name="nick"
                 component={renderField}
                 placeholder="Ваше имя"
                 type="text"
                 className="signup-input"
-            />
+            /> */}
             <Field
                 name="login"
                 component={renderField}

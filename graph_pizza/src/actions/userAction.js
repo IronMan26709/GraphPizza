@@ -34,18 +34,33 @@ const LogInFail = payload => ({
 
 
 
+const userUpsertRequest = payload => ({
+    type:types.USER_UPSERT_REQUEST,
+    payload
+})
+const userUpsertSuccess = payload => ({
+    type:types.USER_UPSERT_SUCCESS,
+    payload
+})
+const userUpsertFail = payload => ({
+    type:types.USER_UPSERT_FAIL,
+    payload
+})
+
+
+
 
 export const Registration = payload => async dispatch => {
     getToken();
     const data = await gql.request(
-      `mutation reg($login:String!, $password:String!){
-              createUser(login:$login, password:$password){
-                  _id, login
+      `mutation reg( $user : UserInput ){
+        UserUpsert( user : $user ){
+                  _id
               }}`,
-      { login: payload.login, password: payload.confirmPassword, nick: payload.nick }
+        { user : { login:payload.login , password: payload.confirmPassword }}
     );
     try {
-      const {_id:id ,login} = data.createUser
+      const {_id:id ,login} = data.UserUpsert
       const result = { id, login };
       dispatch(SignUpSuccess (result));
       localStorage._id = id;
@@ -58,6 +73,31 @@ export const Registration = payload => async dispatch => {
 
 
 
+
+
+  export const UserUpsert = payload => async dispatch => {
+    getToken();
+    console.log(payload)
+    const data = await gql.request(
+        `mutation ( $user : UserInput) {
+                UserUpsert( user : $user){
+                  _id, login, nick, acl
+                }
+              }`,
+        { user : {  _id : localStorage._id, nick : payload.nick ,  login : payload.login }}
+    );
+        console.log("UserUpsert", data.UserUpsert.login)
+    try {
+      dispatch(userUpsertSuccess (data.UserUpsert.login));
+    //   localStorage._id = id;
+      dispatch(userUpsertRequest(true));
+    } catch (er) {
+      dispatch(userUpsertFail(true));
+    }
+  };
+  
+
+
   export const Auth = payload => async dispatch => {
     getToken();
     const data = await gql.request(
@@ -66,11 +106,11 @@ export const Registration = payload => async dispatch => {
         }`,
             { login: payload.login, password: payload.password}
     );
-        console.log(data)
        if(data.login) 
         {localStorage.setItem("JwtToken", data.login)}
         dispatch(LogInSuccess(data.login));
-        dispatch(LogInRequest(true), console.log(data));
+        dispatch(LogInRequest(true),
+        console.log(data));
         // dispatch(LogInFail(er))
 
 }
@@ -111,15 +151,17 @@ export const GetUsersInfo = () => async dispatch => {
 
 
 
-// Получаем все товары
+// Получаем все товары юзера
+
 
 export const GetGoods = payload => async dispatch => {
     getToken();
     const data = await gql.request(
-        `query FindGoods  {
-            GoodFind (query: "[{}]") {
+        `query FindGoods ( $query : String) {
+            GoodFind (query: $query) {
                 _id,
                 price,
+                name,
                 description,
                 categories{
                     name},
@@ -129,9 +171,10 @@ export const GetGoods = payload => async dispatch => {
                         url
                     }
             }
-        }`
-    );
-        console.log(data.GoodFind)
+        }`, {
+            query: JSON.stringify([{ ___owner: localStorage._id }])
+        }
+    );console.log(data.GoodFind)
 }
 
 
@@ -201,39 +244,54 @@ export const GetUsersGoods = payload => async dispatch => {
 
 
 
-
-export const GetAllPhotos = payload => async dispatch => {
-    getToken()
-    const data = await gql.request(
-        `query ImageFind{
-            ImageFind(query: "[{}]"){
-                _id,
-                url,
-                owner {login, _id}
-            }
-        }`
-    );
-    console.log(data.ImageFind)
-}
+// работает
+// export const GetAllPhotos = payload => async dispatch => {
+//     getToken()
+//     const data = await gql.request(
+//         `query ImageFind{
+//             ImageFind(query: "[{}]"){
+//                 _id,
+//                 url,
+//                 owner {login, _id}
+//             }
+//         }`
+//     );
+    
+//     try {
+//         dispatch(userUpsertSuccess (data.UserUpsert.login));
+//         console.log(data.ImageFind)
+//         dispatch(userUpsertRequest(true));
+//       } catch (er) {
+//         dispatch(userUpsertFail(true));
+//       }
+// }
 
 
 
 // Получить всё фото юзера по его Id
-
-export const GetOWnersPhotos = payload => async dispatch => {
-    getToken()
-    const owner1 = payload === "" ? "5db5835dc2894c20669bfc89"  : payload
-    
-    const data = await gql.request(
-       ` query ($query : String!){
-        ImageFind(query: $query){
-                _id,
-                url,
-                owner{ login, _id }
-          }
-        }`,{   
-            query: JSON.stringify([{ ___owner: owner1 }])
-        }
+// работает
+// export const GetOWnersPhotos = payload => async dispatch => {
+//     getToken()
+//     const owner1 = payload === "" ? localStorage._id  : payload
+//     const data = await gql.request(
+//        ` query ($query : String!){
+//         ImageFind(query: $query){
+//                 _id,
+//                 url,
+//                 text,
+//                 owner{ login, _id }
+//           }
+//         }`,{   
+//             query: JSON.stringify([{ ___owner: owner1 }])
+//         }
             
-    );console.log(data.ImageFind)
-}
+//     );console.log(data.ImageFind)
+// }
+
+
+
+
+
+
+
+
