@@ -127,6 +127,36 @@ export const NewCategory = payload => async dispatch => {
 
 
 
+
+
+export const GetAllCategories = payload => async dispatch => {
+    dispatch(getAllCategoriesRequest())
+    getToken()
+    const data = await gql.request(
+       `mutation{
+        CategoryUpsert(category: "[{}]"){
+                _id,
+                name,
+                goods
+          }
+        }`
+            
+    );
+    try {
+        console.log(data.CategoryUpsert)
+         dispatch(getAllCategoriesSuccess(data.CategoryUpsert._id))
+    }
+    catch ( error ) {
+        dispatch(getAllCategoriesFail(error))
+    }
+}
+
+
+
+
+
+
+
 export const GetAllPhotos = payload => async dispatch => {
     const ownerId = localStorage._id 
     getToken()
@@ -153,7 +183,6 @@ export const GetAllPhotos = payload => async dispatch => {
 export const GetUsersGoods = payload => async dispatch => {
     getToken()
     dispatch(getUsersGoodsRequest())
-    const Id = payload === "" ? "5db5835dc2894c20669bfc89" : payload
     const data = await gql.request(
        ` query ($query : String!){
             GoodFind(query: $query){
@@ -170,7 +199,7 @@ export const GetUsersGoods = payload => async dispatch => {
                         url
                     }
             }
-        }`,{ query : JSON.stringify([{_id :Id}])
+        }`,{ query : JSON.stringify([{ ___owner : localStorage._id}])
         }
     );
     try {
