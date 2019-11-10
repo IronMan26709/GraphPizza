@@ -11,7 +11,7 @@ class ListOfPhotos extends Component{
     
     render () {
         const { arrayPhotos } = this.props
-        console.log( "Array with photos",arrayPhotos)
+        // console.log( "Array with photos",arrayPhotos)
         return(
             <div className="list_of_photos">
                     { arrayPhotos.map( el => <ImagePreview  key={el._id} props={el} />)  }

@@ -77,6 +77,7 @@ export const Registration = payload => async dispatch => {
 
   export const UserUpsert = payload => async dispatch => {
     getToken();
+    dispatch(userUpsertRequest());
     console.log(payload)
     const data = await gql.request(
         `mutation ( $user : UserInput) {
@@ -90,7 +91,6 @@ export const Registration = payload => async dispatch => {
     try {
       dispatch(userUpsertSuccess (data.UserUpsert.login));
     //   localStorage._id = id;
-      dispatch(userUpsertRequest(true));
     } catch (er) {
       dispatch(userUpsertFail(true));
     }
@@ -154,28 +154,28 @@ export const GetUsersInfo = () => async dispatch => {
 // Получаем все товары юзера
 
 
-export const GetGoods = payload => async dispatch => {
-    getToken();
-    const data = await gql.request(
-        `query FindGoods ( $query : String) {
-            GoodFind (query: $query) {
-                _id,
-                price,
-                name,
-                description,
-                categories{
-                    name},
-                images{
-                        _id,
-                        text,
-                        url
-                    }
-            }
-        }`, {
-            query: JSON.stringify([{ ___owner: localStorage._id }])
-        }
-    );console.log(data.GoodFind)
-}
+// export const GetGoods = payload => async dispatch => {
+//     getToken();
+//     const data = await gql.request(
+//         `query FindGoods ( $query : String) {
+//             GoodFind (query: $query) {
+//                 _id,
+//                 price,
+//                 name,
+//                 description,
+//                 categories{
+//                     name},
+//                 images{
+//                         _id,
+//                         text,
+//                         url
+//                     }
+//             }
+//         }`, {
+//             query: JSON.stringify([{ ___owner: localStorage._id }])
+//         }
+//     );console.log(data.GoodFind)
+// }
 
 
 
@@ -206,39 +206,39 @@ export const GetCategoriById = payload => async dispatch => {
 
 
 // Получаем товар по Id
-export const GetGoodOnlyOneById = payload => async dispatch => {
-    getToken()
-    const Id = payload
-    console.log("payload", Id)
-    const data = await gql.request(
-       ` query ($query : String!){
-            GoodFindOne(query: $query){
-                _id,
-                name,
-                price
-          }
-        }`,{ query : JSON.stringify([{_id :Id}])
-        }
-    );console.log(data.GoodFindOne)
-}
+// export const GetGoodOnlyOneById = payload => async dispatch => {
+//     getToken()
+//     const Id = payload
+//     console.log("payload", Id)
+//     const data = await gql.request(
+//        ` query ($query : String!){
+//             GoodFindOne(query: $query){
+//                 _id,
+//                 name,
+//                 price
+//           }
+//         }`,{ query : JSON.stringify([{_id :Id}])
+//         }
+//     );console.log(data.GoodFindOne)
+// }
 
 
 // Список товаров конкретного юзера
 
-export const GetUsersGoods = payload => async dispatch => {
-    getToken()
-    const Id = payload === "" ? "5db5835dc2894c20669bfc89" : payload
-    const data = await gql.request(
-       ` query ($query : String!){
-            GoodFind(query: $query){
-                _id,
-                name,
-                price
-          }
-        }`,{ query : JSON.stringify([{_id :Id}])
-        }
-    );console.log(data.GoodFind)
-}
+// export const GetUsersGoods = payload => async dispatch => {
+//     getToken()
+//     const Id = payload === "" ? "5db5835dc2894c20669bfc89" : payload
+//     const data = await gql.request(
+//        ` query ($query : String!){
+//             GoodFind(query: $query){
+//                 _id,
+//                 name,
+//                 price
+//           }
+//         }`,{ query : JSON.stringify([{_id :Id}])
+//         }
+//     );console.log(data.GoodFind)
+// }
 
 
 

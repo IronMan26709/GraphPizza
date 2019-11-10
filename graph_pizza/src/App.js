@@ -8,6 +8,8 @@ import  CreateNewGood  from './containers/createNewGood';
 import CreateNewCategory  from './containers/createNewCategory'
 import ListOfPhotos from './containers/listOfPhotos';
 import ListOfGoods from './containers/listOfGoods';
+import ListOfCategories from './containers/listOfCategories';
+import ListOfOrders from './containers/listOfOrders';
 
 
 function App() {
@@ -22,6 +24,10 @@ function App() {
           <Route path="/CreateNewCategory" component ={CreateNewCategory}/>
           <Route path="/photos" component ={ListOfPhotos}/>
           <Route path="/goods" component ={ListOfGoods}/>
+          <Route path="/categories" component ={ListOfCategories}/>
+          <Route path="/orders" component ={ListOfOrders}/>
+          
+          
 
           
           

@@ -2,6 +2,7 @@ import React from 'react';
 import CreateNewGoodForm from '../../components/forms/CreateNewGood/';
 import { connect } from 'react-redux';
 import { NewGood } from '../../actions/goodAction';
+import { Redirect } from 'react-router-dom'
  
 
 const CreateNewGood = props => {
@@ -20,7 +21,7 @@ const CreateNewGood = props => {
         }
         props.NewGood( val )
       };
-      if ( newOrderSucс === true ) return props.history.push("/")
+      if ( newOrderSucс === true ) return <Redirect to ="/"/>
     return(
         <div className="create_new_good_comp">
                 <CreateNewGoodForm onSubmit={ e => handelSubmit(e)}/>

@@ -2,6 +2,7 @@ import React, {Component } from 'react';
 import { connect } from 'react-redux';
 import { GetUsersGoods } from '../../actions/goodAction';
 import { GoodPreview } from '../../components/goodPreview'; 
+import { GoodComponent } from '../../containers/GoodComponent';
 
 class ListOfGoods extends Component {
     componentDidMount(){
@@ -9,10 +10,10 @@ class ListOfGoods extends Component {
     }
     render(){
         const{ arrayGoods } = this.props
-        console.log("arrayGoods in listComponent", arrayGoods )
+        console.log(arrayGoods)
         return(
             <div className="list_of_goods">
-                { arrayGoods.map( el => <GoodPreview  key={el._id} props={el} /> )}
+                { arrayGoods.map( el => <GoodComponent key={el._id} props={el} /> )}
             </div> 
         )
     }

@@ -61,6 +61,39 @@ const getUsersGoodsFail = payload => ({
 
 
 
+const getAllCategoriesRequest = payload => ({
+    type:types.GET_ALL_CATEGORIES_REQUEST,
+    payload
+})
+
+const getAllCategoriesSuccess = payload => ({
+    type:types.GET_ALL_CATEGORIES_SUCCESS,
+    payload
+})
+const getAllCategoriesFail = payload => ({
+    type:types.GET_ALL_CATEGORIES_FAIL,
+    payload
+})
+
+
+
+const getOrdersRequest = payload => ({
+    type:types.GET_ALL_ORDERS_REQUEST,
+    payload
+})
+
+const getOrdersSuccess = payload => ({
+    type:types.GET_ALL_ORDERS_SUCCESS,
+    payload
+})
+const getOrdersFail = payload => ({
+    type:types.GET_ALL_ORDERS_FAIL,
+    payload
+})
+
+
+const error1 = "Нет записей"
+
 export const NewGood = payload => async dispatch => {
     dispatch(newGoodRequest())
     getToken()
@@ -133,21 +166,56 @@ export const GetAllCategories = payload => async dispatch => {
     dispatch(getAllCategoriesRequest())
     getToken()
     const data = await gql.request(
-       `mutation{
-        CategoryUpsert(category: "[{}]"){
+       `query ( $query : String ){
+        CategoryFind(query: $query){
                 _id,
                 name,
-                goods
+                goods{ 
+                    name
+                }
           }
-        }`
+        }`, {
+            query : JSON.stringify([{
+                 ___owner : localStorage._id
+            }])
+        }
             
     );
     try {
-        console.log(data.CategoryUpsert)
-         dispatch(getAllCategoriesSuccess(data.CategoryUpsert._id))
+        console.log(data.CategoryFind)
+         dispatch(getAllCategoriesSuccess(data.CategoryFind))
     }
     catch ( error ) {
         dispatch(getAllCategoriesFail(error))
+    }
+}
+
+
+export const GetOrders = payload => async dispatch => {
+    dispatch(getOrdersRequest())
+    getToken()
+    const data = await gql.request(
+       `query ( $query : String ) {
+        OrderFind(query: $query){
+                _id,
+                owner{
+                    login
+                }
+                total
+          }
+        }`, {
+            query : JSON.stringify([{
+                 ___owner : localStorage._id
+            }])
+        }    
+    );
+    try {
+        data.OrderFind.length > 0 ?
+         dispatch(getOrdersSuccess(data.OrderFind)) :
+         dispatch(getOrdersFail(error1))
+    }
+    catch ( error ) {
+        dispatch(getOrdersFail(error))
     }
 }
 
@@ -174,9 +242,11 @@ export const GetAllPhotos = payload => async dispatch => {
     );
     
     try {
-        dispatch(getOwnPhotosSuccess (data.ImageFind));
-      } catch (error) {
-        dispatch(getOwnPhotosFail(error));
+        data.ImageFind.length > 0  ? 
+        dispatch(getOwnPhotosSuccess (data.ImageFind)) :
+         dispatch(getOwnPhotosFail( error1 )) ; 
+      } catch ( error ) {
+        dispatch(getOwnPhotosFail( error ));
       }
 }
 
@@ -203,10 +273,11 @@ export const GetUsersGoods = payload => async dispatch => {
         }
     );
     try {
-        console.log(data.GoodFind)
-        dispatch(getUsersGoodsSuccess (data.GoodFind));
-      } catch (error) {
-        dispatch(getUsersGoodsFail(error));
+        data.GoodFind.length > 0 ? 
+        dispatch(getUsersGoodsSuccess (data.GoodFind)) :
+        dispatch(getUsersGoodsFail( error1 ));
+      } catch ( error ) {
+        dispatch(getUsersGoodsFail( error ));
       }
     
 }

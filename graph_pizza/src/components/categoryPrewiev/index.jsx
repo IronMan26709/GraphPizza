@@ -1,13 +1,14 @@
 import React from 'react' ;
+import { GoodPreview } from '../../components/goodPreview'
 
 
-export const CatgoryPreview = props =>{
-    // const { name, _id, price, categories, description, images } = props.props
+export const CategoryPreview = props =>{
+    const { name, _id, goods } = props.props
     console.log( "categoryPreview", props.props)
     return(
         <div  className="good_preview_component">
-             {/* <div >
-                 <span>Name :</span>
+            <div >
+                 <span>Название категории :</span>
                  { name !== null && <span>{name}</span> }
             </div>
             <div >
@@ -16,10 +17,10 @@ export const CatgoryPreview = props =>{
             </div>
             <div >
                 <span>Товары в категории :</span>
-                { arrayGoods !== null && <div>
-                    { arrayGoods.map( el => <GoodPreview  key={el._id} props={el} /> )}
+                { goods !== null && <div>
+                    { goods.map( el => <GoodPreview  key={el._id} props={el} /> )}
                 </div> }
-            </div>   */}
+            </div> 
         </div>
     )
 }

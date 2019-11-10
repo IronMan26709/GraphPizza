@@ -2,12 +2,14 @@ import React,{ useState }  from "react";
 import { connect } from "react-redux";
 import LogInForm from "../../components/forms/LogIn";
 import { Auth, GetUsersInfo,
-   GetGoods,
+  //  GetGoods,
    GetCategoriById,
    GetAllPhotos,
    GetOWnersPhotos,
-   GetUsersGoods,
    UserUpsert } from "../../actions/userAction";
+
+import { GetUsersGoods } from '../../actions/goodAction'
+ 
 
 const LogInComponent = props => {
    const [ Val, setInpVal ] = useState( "" )
@@ -18,7 +20,7 @@ const LogInComponent = props => {
     props.GetUsersInfo();
   };
   const clickGoods = () => {
-    props.GetGoods();
+    props.GetUsersGoods();
   };
 
   const changeCategories = event => {
@@ -78,9 +80,9 @@ const getUsersOrders = () => {
         <input type="file" name="photo" id='photo'/>
         <button>SUBMIT</button>
       </form>
-{/* 
-      <button onClick={getPhotos}>GetAllPhotos</button>
-      <button onClick={getMyPhotos}>My Photos</button> */}
+
+      {/* <button onClick={getPhotos}>GetAllPhotos</button> */}
+      <button onClick={getMyPhotos}>My Photos</button> 
       <button onClick={getUsersOrders}>UsersOrders </button>
 
       <div className="upsert_user" >
@@ -94,7 +96,7 @@ const getUsersOrders = () => {
 const mapDispatchToProps = dispatch => ({
   Auth: e => dispatch(Auth(e)),
   GetUsersInfo: e => dispatch(GetUsersInfo(e)),
-  GetGoods: () => dispatch(GetGoods()),
+  // GetGoods: () => dispatch(GetGoods()),
   GetCategoriById: e =>dispatch(GetCategoriById(e)),
   // GetAllPhotos: e =>dispatch(GetAllPhotos(e)),
   // GetOWnersPhotos: e =>dispatch(GetOWnersPhotos(e)),
