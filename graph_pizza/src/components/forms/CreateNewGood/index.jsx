@@ -61,6 +61,13 @@ const CreateNewGoodForm = props =>{
                     // className="signup-input"
                     type="text"
                 />
+                <Field
+                    name="IdCategory"
+                    component={renderField}
+                    placeholder="ID категории"
+                    // className="signup-input"
+                    type="text"
+                />
                 <Button text="Создать новый товар"/>
              </form>
         </div>

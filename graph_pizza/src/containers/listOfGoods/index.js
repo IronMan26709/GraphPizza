@@ -1,18 +1,21 @@
 import React, {Component } from 'react';
 import { connect } from 'react-redux';
 import { GetUsersGoods } from '../../actions/goodAction';
-import { GoodPreview } from '../../components/goodPreview'; 
-import { GoodComponent } from '../../containers/GoodComponent';
+// import { GoodPreview } from '../../components/goodPreview'; 
+import  GoodComponent  from '../../containers/GoodComponent';
+// import { newGoodInCart } from '../../actions/goodAction'
+import Cart from '../Cart'
 
 class ListOfGoods extends Component {
     componentDidMount(){
         this.props.GetUsersGoods()
     }
     render(){
-        const{ arrayGoods } = this.props
-        console.log(arrayGoods)
+        const{ arrayGoods, cart } = this.props
+        console.log(cart)
         return(
             <div className="list_of_goods">
+                <Cart/>
                 { arrayGoods.map( el => <GoodComponent key={el._id} props={el} /> )}
             </div> 
         )
@@ -20,10 +23,12 @@ class ListOfGoods extends Component {
 }
 
 const mapStateToProps = state =>({
-    arrayGoods : state.orderReducer.arrayGoods
+    arrayGoods : state.orderReducer.arrayGoods,
+    cart : state.orderReducer.cart
 })
 const mapDispatchToProps = dispatch =>({
-    GetUsersGoods: ()=>dispatch(GetUsersGoods())
+    GetUsersGoods: ()=>dispatch(GetUsersGoods()),
+    // newGoodInCart : e => dispatch( newGoodInCart ( e ) )
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(ListOfGoods)

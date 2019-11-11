@@ -5,20 +5,9 @@ import { NewCategory } from '../../actions/goodAction';
  
 
 const CreateNewCategory = props => {
-    // const { newOrderSucс } = props
     const handelSubmit = values => {
-        // const { name, id, idGood } = values
-        // const pricce = Number(price)
-        // const val = {
-        //     "price" : pricce,
-        //     "name" : name,
-        //     "description" : description,
-        //     "image" : images,
-        //     "textOfPhoto" : textOfPhoto,
-        //     "categories" : categories
-        // }
+      
         props.NewCategory( values )
-        console.log(props)
       };
     //   if ( newOrderSucс === true ) return  props.history.push("/")
     return(
@@ -32,6 +21,5 @@ const mapDispatchStateToProps = dispatch =>({
     NewCategory: e => dispatch(NewCategory(e))
 })
 const mapStateToProps = state => ({
-    newOrderSucс: state.orderReducer.newOrderSucс
 })
 export default connect (mapStateToProps, mapDispatchStateToProps)(CreateNewCategory)

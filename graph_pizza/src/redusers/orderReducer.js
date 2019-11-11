@@ -5,7 +5,8 @@ const initialState = {
     arrayPhotos : [],
     arrayGoods : [],
     arrayCategories : [],
-    arrayOrders : []
+    arrayOrders : [],
+    cart : []
 };
 
 
@@ -48,9 +49,16 @@ export default (state = initialState, action) => {
         case types.GET_ALL_ORDERS_FAIL:
                 console.log(action.payload)
             return {  ...state };    
-                
-
-            
+        
+        case types.ADD_GOOD_IN_CART:
+                return {
+                    ...state,  cart: state.cart.concat( action.payload)
+                };       
+        case types.MAKE_ORDER_SUCCESS:
+                return {
+                    ...state
+                };           
+                 
         default: {
             return state ;
         }

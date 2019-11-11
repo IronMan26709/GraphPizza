@@ -1,9 +1,29 @@
-import React, { Component }  from 'react'
+import React, { useState }  from 'react';
+import { addGoodInCart } from '../../actions/goodAction';
+import { connect } from 'react-redux';
 
 
 
-export const GoodComponent = props =>{
-    const{ images, name, description, price } = props.props
+
+
+const GoodComponent = props =>{
+    const { addGoodInCart } = props
+    const [ counter , setCounter ] = useState( 1 )
+    const incr = () => { setCounter( counter + 1) }
+    const decr = () => { if( counter > 1 ) setCounter( counter - 1) }
+
+    const{ images, name, description, price, _id} = props.props
+   
+    const ShopToCart = () =>{
+        const val =[{
+            "count" : counter,
+            "good" : {
+                "_id" : _id
+            }
+        }]
+        console.log(val)
+        addGoodInCart(val)
+    }
     return (
         <div className="order_component_wrap">
             <div className="img_wrap">
@@ -29,8 +49,24 @@ export const GoodComponent = props =>{
                 
             </div>
             <div className="order_block_wrap">
+                <div className="counter">
+                    <div className="counter_incr" onClick={() =>incr ()}> + </div>
+                    <div className="counter">{counter}</div>
+                    <div className="counter_dicr" onClick={() => decr()}> - </div>
+                </div>
+                <div className="wish_button_wrap">
+                    <button onClick={ () =>ShopToCart()}>Хочу</button>
+                </div>
 
             </div>
         </div>
     )
 }
+
+const mapDispatchToProps = dispatch => ({
+    addGoodInCart : e => dispatch( addGoodInCart ( e ) )
+})
+
+
+
+export default connect(null, mapDispatchToProps )(GoodComponent)

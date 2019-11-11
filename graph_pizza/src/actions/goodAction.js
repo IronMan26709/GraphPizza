@@ -92,6 +92,31 @@ const getOrdersFail = payload => ({
 })
 
 
+
+const makeOrderRequest = payload => ({
+    type:types.MAKE_ORDER_REQUEST,
+    payload
+})
+
+const makeOrderSuccess = payload => ({
+    type:types.MAKE_ORDER_SUCCESS,
+    payload
+})
+const makeOrderFail = payload => ({
+    type:types.MAKE_ORDER_FAIL,
+    payload
+})
+
+
+
+
+
+export const addGoodInCart = payload => ({
+    type:types.ADD_GOOD_IN_CART,
+    payload
+})
+
+
 const error1 = "Нет записей"
 
 export const NewGood = payload => async dispatch => {
@@ -132,18 +157,24 @@ export const NewGood = payload => async dispatch => {
 export const NewCategory = payload => async dispatch => {
     dispatch(newCategoryRequest())
     getToken()
+    console.log(payload)
     const data = await gql.request(
        `mutation ($category: CategoryInput!){
         CategoryUpsert(category: $category){
-                _id
+                _id,
+                name,
+                goods {
+                    _id,
+                    name
+                }
           }
-        }`,{   
-            category : { 
+        }`, {   
+            category :{ 
                 name: payload.name,
-                // _id : payload.id,
-                goods : { _id : payload.idGood}
-                // categories: { _id : payload.categories
-                // }
+                _id : payload.id,
+                goods : [
+                    { _id : payload.idGood , name : payload.goodName}
+                ]
               }
         }
             
@@ -278,6 +309,35 @@ export const GetUsersGoods = payload => async dispatch => {
         dispatch(getUsersGoodsFail( error1 ));
       } catch ( error ) {
         dispatch(getUsersGoodsFail( error ));
-      }
-    
+      }   
 }
+
+
+
+
+export const makeOrder = payload => async dispatch => {
+    dispatch(makeOrderRequest())
+    getToken()
+    // console.log(payload)
+    const data = await gql.request(
+       `mutation ($order: OrderInput!){
+        OrderUpsert(order: $order){
+                _id
+          }
+        }`, {   
+            order : payload
+        }
+            
+    );
+    try {
+        console.log(data. OrderUpsert)
+         dispatch(makeOrderSuccess(data. OrderUpsert))
+    }
+    catch ( error ) {
+        dispatch(makeOrderFail(error))
+    }
+}
+
+
+
+

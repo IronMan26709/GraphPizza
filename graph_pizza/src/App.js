@@ -10,6 +10,7 @@ import ListOfPhotos from './containers/listOfPhotos';
 import ListOfGoods from './containers/listOfGoods';
 import ListOfCategories from './containers/listOfCategories';
 import ListOfOrders from './containers/listOfOrders';
+// import Cart from './containers/Cart';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Route path="/goods" component ={ListOfGoods}/>
           <Route path="/categories" component ={ListOfCategories}/>
           <Route path="/orders" component ={ListOfOrders}/>
-          
+          {/* <Route path="/cart" component ={Cart}/> */}
           
 
           

@@ -32,6 +32,15 @@ const CreateNewCAtegoryForm = props =>{
                     // className="signup-input"
                     type="text"
                 />
+                <Field
+                    name="goodName"
+                    component={renderField}
+                    placeholder="Название товара"
+                    // className="signup-input"
+                    type="text"
+                />
+
+
                 <Button text="Создать новую категорию"/>
              </form>
         </div>

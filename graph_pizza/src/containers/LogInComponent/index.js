@@ -43,13 +43,6 @@ const LogInComponent = props => {
 
 
   
-  const getPhotos = () =>{
-    // props.GetAllPhotos()
-  } 
- 
-  const getMyPhotos = () =>{
-    props.GetOWnersPhotos(Val)
-  }
 
 
   const UpsertUser = () =>{
@@ -68,11 +61,7 @@ const getUsersOrders = () => {
       <LogInForm onSubmit={handelSubmit} />
       <button onClick={click}>Users</button>
       <button onClick={clickGoods}>Goods</button>
-      {/* <img
-        src={
-          "http://shop.asmer.fs.a-level.com.ua/" +
-          "images/0bb6a38293dbb44c7688440909b1d1f8"
-        } */}
+    
       <input type="string" onChange={e =>changeCategories(e)}/>
       <button onClick={clickInput}>Input</button>
 
@@ -81,8 +70,6 @@ const getUsersOrders = () => {
         <button>SUBMIT</button>
       </form>
 
-      {/* <button onClick={getPhotos}>GetAllPhotos</button> */}
-      <button onClick={getMyPhotos}>My Photos</button> 
       <button onClick={getUsersOrders}>UsersOrders </button>
 
       <div className="upsert_user" >
