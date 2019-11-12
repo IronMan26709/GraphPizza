@@ -7,9 +7,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case types.USER_LOG_IN:
+        case types.USER_LOG_IN_SUCCESS:
             return {
-                ...state
+                ...state, logined : true
             };
         
         default: {

@@ -1,16 +1,34 @@
 import React from 'react';
 import { connect }  from 'react-redux';
-import { makeOrder } from '../../actions/goodAction'
+import { makeOrder,
+         clearArrayGoods, 
+         incCountTheItemCart,
+         decCountTheItemCart,
+         delTheItemfromCart } from '../../actions/goodAction';
   
 const Cart = props =>{
-    const { cart, arrayGoods } = props
+    const { cart, arrayGoods} = props
+    console.log("arrayGoods",arrayGoods)
     const clickMakeOrder = () =>{
-        
-    const val = { "orderGoods" : cart }
+    const cartArray =  cart.map ( orderItem =>  
+        ({  "count" : orderItem.count,
+            "order" : { "_id" : orderItem._id }
+        }) )
+    const val = { "orderGoods" : cartArray }                                            
     props.makeOrder(val)
-    // console.log("click", val)
     }
-    
+    const clearCart = () =>{
+        props.clearArrayGoods()
+    }
+    const incr = event =>{
+        props.incCountTheItemCart(event.target.id)
+    }
+    const decr = event =>{
+        props.decCountTheItemCart(event.target.id)
+    }
+    const del = event =>{
+        props.delTheItemfromCart(event.target.id)
+    } 
     return(
         <div className="cart_wrap">
             <div className="carts_header">
@@ -20,23 +38,35 @@ const Cart = props =>{
             </div>
             <div className="list_of_orders_wrap">
                 { cart && cart.map( el => 
-                <div>
-                    <span>{el.count}</span>
-                    <span>  { arrayGoods && arrayGoods.find( good => good._id ===  el.good._id ).name  } </span>
+                <div key={el._id}>
+                    <div>{el._id}</div>
+                    <div className="counter">
+                        <div id={el._id} onClick={ id => incr( id ) }> + </div>
+                        <div>{el.count}</div>
+                        <div id={el._id} onClick={ id => decr( id ) }> - </div>
+                        <div id={el._id} onClick={ id => del( id ) }> Del </div>                        
+                    </div>
                 </div>)  }
             </div>
+            
             <div className="action_block_wrap">
                 <button onClick={clickMakeOrder}>Купить</button>
+                <button onClick={clearCart}>Очистить карзину</button>
             </div>
         </div>
     )
 }
 
 const mapDispatchToProps = dispatch =>({
-    makeOrder : e => dispatch( makeOrder( e ) ) 
+    makeOrder : e => dispatch( makeOrder( e )),
+    clearArrayGoods : () => dispatch(clearArrayGoods()),
+    incCountTheItemCart : e => dispatch(incCountTheItemCart( e )),
+    decCountTheItemCart : e => dispatch(decCountTheItemCart( e )),
+    delTheItemfromCart : e => dispatch( delTheItemfromCart( e ))
 })
 
 const mapStateToProps = state =>({
+    item : state.orderReducer.item,
     cart : state.orderReducer.cart,
     arrayGoods : state.orderReducer.arrayGoods
 })

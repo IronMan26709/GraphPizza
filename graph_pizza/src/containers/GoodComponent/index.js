@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 const GoodComponent = props =>{
     const { addGoodInCart } = props
+    console.log(props)
     const [ counter , setCounter ] = useState( 1 )
     const incr = () => { setCounter( counter + 1) }
     const decr = () => { if( counter > 1 ) setCounter( counter - 1) }
@@ -15,13 +16,18 @@ const GoodComponent = props =>{
     const{ images, name, description, price, _id} = props.props
    
     const ShopToCart = () =>{
-        const val =[{
-            "count" : counter,
-            "good" : {
-                "_id" : _id
-            }
-        }]
-        console.log(val)
+        console.log(_id)
+        const val = { 
+            "_id" : _id,
+            "count" : counter 
+        }
+            // {
+            // "count" : counter,
+            // "good" : {
+            //     "_id" : _id
+            // }
+            
+        
         addGoodInCart(val)
     }
     return (

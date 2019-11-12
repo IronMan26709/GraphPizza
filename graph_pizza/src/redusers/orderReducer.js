@@ -25,7 +25,6 @@ export default (state = initialState, action) => {
                 ...state, arrayPhotos : action.payload
             };
         case types.GET_OWN_PHOTOS_FAIL:
-            console.log(action.payload)
             return {  ...state  };
 
 
@@ -36,7 +35,7 @@ export default (state = initialState, action) => {
                 ...state, arrayGoods : action.payload
             };
         case types.GET_USERS_GOODS_FAIL:
-                console.log(action.payload)
+
             return {  ...state  };
         case types.GET_ALL_CATEGORIES_SUCCESS:
             return {
@@ -47,7 +46,6 @@ export default (state = initialState, action) => {
                 ...state, arrayOrders : action.payload
             };
         case types.GET_ALL_ORDERS_FAIL:
-                console.log(action.payload)
             return {  ...state };    
         
         case types.ADD_GOOD_IN_CART:
@@ -59,6 +57,33 @@ export default (state = initialState, action) => {
                     ...state
                 };           
                  
+        case types.CLEAR_ARRAY_GOODS :
+                return {
+                    ...state, cart : []
+                };
+        case types.INC_COUNT_ITEM_CART :
+                const val = state.cart.find( el => el._id === action.payload).count + 1    
+                return {
+                    ...state,  
+                            cart : state.cart.map( el => el._id === action.payload  ? { ...el, count : val  }  : el )
+        
+                };
+        case types.DEC_COUNT_ITEM_CART :
+            const valDec = state.cart.find( el => el._id === action.payload).count
+            const res = valDec > 1 ? valDec - 1 : valDec    
+            
+                return{
+                ...state,  
+                        cart : state.cart.map( el => el._id === action.payload  ? { ...el, count : res  }  : el )
+    
+            };
+
+        case types.DEL_ONE_ITEM_FROM_CART :
+                return {  ...state, cart : state.cart.filter( el => el._id !== action.payload )
+            };
+            
+            
+
         default: {
             return state ;
         }

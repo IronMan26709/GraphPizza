@@ -34,18 +34,18 @@ const LogInFail = payload => ({
 
 
 
-const userUpsertRequest = payload => ({
-    type:types.USER_UPSERT_REQUEST,
-    payload
-})
-const userUpsertSuccess = payload => ({
-    type:types.USER_UPSERT_SUCCESS,
-    payload
-})
-const userUpsertFail = payload => ({
-    type:types.USER_UPSERT_FAIL,
-    payload
-})
+// const userUpsertRequest = payload => ({
+//     type:types.USER_UPSERT_REQUEST,
+//     payload
+// })
+// const userUpsertSuccess = payload => ({
+//     type:types.USER_UPSERT_SUCCESS,
+//     payload
+// })
+// const userUpsertFail = payload => ({
+//     type:types.USER_UPSERT_FAIL,
+//     payload
+// })
 
 
 
@@ -75,44 +75,53 @@ export const Registration = payload => async dispatch => {
 
 
 
-  export const UserUpsert = payload => async dispatch => {
-    getToken();
-    dispatch(userUpsertRequest());
-    console.log(payload)
-    const data = await gql.request(
-        `mutation ( $user : UserInput) {
-                UserUpsert( user : $user){
-                  _id, login, nick, acl
-                }
-              }`,
-        { user : {  _id : localStorage._id, nick : payload.nick ,  login : payload.login }}
-    );
-        console.log("UserUpsert", data.UserUpsert.login)
-    try {
-      dispatch(userUpsertSuccess (data.UserUpsert.login));
-    //   localStorage._id = id;
-    } catch (er) {
-      dispatch(userUpsertFail(true));
-    }
-  };
+  // export const UserUpsert = payload => async dispatch => {
+  //   getToken();
+  //   dispatch(userUpsertRequest());
+  //   console.log(payload)
+  //   const data = await gql.request(
+  //       `mutation ( $user : UserInput) {
+  //               UserUpsert( user : $user){
+  //                 _id, login, nick, acl
+  //               }
+  //             }`,
+  //       { user : {  _id : localStorage._id, nick : payload.nick ,  login : payload.login }}
+  //   );
+  //       console.log("UserUpsert", data.UserUpsert.login)
+  //   try {
+  //     dispatch(userUpsertSuccess (data.UserUpsert.login));
+  //   //   localStorage._id = id;
+  //   } catch (er) {
+  //     dispatch(userUpsertFail(true));
+  //   }
+  // };
   
 
 
   export const Auth = payload => async dispatch => {
     getToken();
+    dispatch(LogInRequest(true))
     const data = await gql.request(
         `query logIn( $login: String!, $password: String!){
             login (login: $login, password: $password)
         }`,
             { login: payload.login, password: payload.password}
     );
-       if(data.login) 
-        {localStorage.setItem("JwtToken", data.login)}
-        dispatch(LogInSuccess(data.login));
-        dispatch(LogInRequest(true),
-        console.log(data));
-        // dispatch(LogInFail(er))
 
+
+
+
+    
+      try {
+
+       if (data.login) 
+        {localStorage.setItem("JwtToken", data.login)}
+
+        dispatch(LogInSuccess(data.login));
+        console.log(data.login);
+      } catch( error ){ 
+        dispatch(LogInFail(error))
+      }
 }
 
 

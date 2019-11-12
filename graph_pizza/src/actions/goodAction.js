@@ -108,7 +108,28 @@ const makeOrderFail = payload => ({
 })
 
 
+export const incCountTheItemCart = payload =>({
+    type:types.INC_COUNT_ITEM_CART,
+    payload
+})
+ 
+export const decCountTheItemCart = payload => ({
+    type:types.DEC_COUNT_ITEM_CART,
+    payload
+})
 
+export const delTheItemfromCart = payload => ({
+    type:types.DEL_ONE_ITEM_FROM_CART,
+    payload
+})
+
+
+
+
+export const clearArrayGoods = payload => ({
+    type:types.CLEAR_ARRAY_GOODS,
+    payload
+})
 
 
 export const addGoodInCart = payload => ({
@@ -136,14 +157,11 @@ export const NewGood = payload => async dispatch => {
                 images:{
                     _id: payload.image
                 }
-                // categories: { _id : payload.categories
-                // }
               }
         }
             
     );
     try {
-        console.log(data.GoodUpsert)
          dispatch(newGoodSuccess(data.GoodUpsert._id))
     }
     catch ( error ) {
@@ -157,7 +175,6 @@ export const NewGood = payload => async dispatch => {
 export const NewCategory = payload => async dispatch => {
     dispatch(newCategoryRequest())
     getToken()
-    console.log(payload)
     const data = await gql.request(
        `mutation ($category: CategoryInput!){
         CategoryUpsert(category: $category){
@@ -180,7 +197,6 @@ export const NewCategory = payload => async dispatch => {
             
     );
     try {
-        console.log(data.CategoryUpsert)
          dispatch(newCategorySuccess(data.CategoryUpsert._id))
     }
     catch ( error ) {
@@ -213,7 +229,6 @@ export const GetAllCategories = payload => async dispatch => {
             
     );
     try {
-        console.log(data.CategoryFind)
          dispatch(getAllCategoriesSuccess(data.CategoryFind))
     }
     catch ( error ) {
@@ -285,27 +300,44 @@ export const GetUsersGoods = payload => async dispatch => {
     getToken()
     dispatch(getUsersGoodsRequest())
     const data = await gql.request(
-       ` query ($query : String!){
-            GoodFind(query: $query){
-                _id,
-                price,
-                name,
-                description,
-                categories{
-                    name,
-                    _id
-                },
-                images{
-                        _id,
-                        url
-                    }
-            }
-        }`,{ query : JSON.stringify([{ ___owner : localStorage._id}])
+    //    ` query ($query : String!){
+    //         GoodFind(query: $query){
+    //             _id,
+    //             price,
+    //             name,
+    //             description,
+    //             categories{
+    //                 name,
+    //                 _id
+    //             },
+    //             images{
+    //                     _id,
+    //                     url
+    //                 }
+    //         }
+    //     }`,{ query : JSON.stringify([{ ___owner : localStorage._id}])
+    //     }
+    // );
+
+    `query ( $query : String!) {
+        CategoryFindOne(query: $query){
+          goods{
+            name,
+            _id, 
+            price,
+            description, 
+            images {
+              url
+             }
+          }
         }
+      }`,{ 
+          query : JSON.stringify([{ _id : payload }])
+      }
     );
     try {
-        data.GoodFind.length > 0 ? 
-        dispatch(getUsersGoodsSuccess (data.GoodFind)) :
+        data.CategoryFindOne.goods.length > 0 ? 
+        dispatch(getUsersGoodsSuccess (data.CategoryFindOne.goods)) :
         dispatch(getUsersGoodsFail( error1 ));
       } catch ( error ) {
         dispatch(getUsersGoodsFail( error ));
@@ -318,7 +350,6 @@ export const GetUsersGoods = payload => async dispatch => {
 export const makeOrder = payload => async dispatch => {
     dispatch(makeOrderRequest())
     getToken()
-    // console.log(payload)
     const data = await gql.request(
        `mutation ($order: OrderInput!){
         OrderUpsert(order: $order){
@@ -330,7 +361,6 @@ export const makeOrder = payload => async dispatch => {
             
     );
     try {
-        console.log(data. OrderUpsert)
          dispatch(makeOrderSuccess(data. OrderUpsert))
     }
     catch ( error ) {
