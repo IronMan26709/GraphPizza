@@ -13,14 +13,14 @@ const LogInForm = props =>{
             <Field
                 name="login"
                 component={renderField}
-                placeholder="Ваш email"
+                placeholder="Ваш email :"
                 className="signup-input"
                 type="text"
             />
              <Field
                 name="password"
                 component={renderField}
-                placeholder="Введите пароль"
+                placeholder="Введите пароль :"
                 className="signup-input"
                 type="password"
             />

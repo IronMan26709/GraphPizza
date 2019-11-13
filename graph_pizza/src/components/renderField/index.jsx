@@ -1,5 +1,6 @@
 import React from 'react';
-import { Error } from '../Error'
+import { Error } from '../Error';
+import './renderField.css';
 
 export const renderField = ({ input, autoComplete, type, placeholder, className, meta: { touched, error } }) => {
     return (

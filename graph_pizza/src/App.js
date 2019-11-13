@@ -12,6 +12,7 @@ import ListOfGoods from './containers/listOfGoods';
 // import ListOfOrders from './containers/listOfOrders';
 import  Header  from './containers/Header';
 import Cart from './containers/Cart';
+import  PrivateRoute  from './PrivatRouter'
 
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
           {/* <Route path="/orders" component ={ListOfOrders}/> */}
           <Route path="/goods/:id" component ={ListOfGoods}/>
           
-          <Route path="/cart" component ={Cart}/>
+          <PrivateRoute path="/cart" component ={Cart}/>
           
 
           {/* приват : cart */}

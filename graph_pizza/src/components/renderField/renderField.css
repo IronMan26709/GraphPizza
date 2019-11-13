@@ -1,0 +1,12 @@
+.control-input{
+    display:flex;
+    flex-direction: column;
+    width:20%;
+    margin: 0 auto;
+}
+.control-input label{
+    align-self: flex-start;
+}
+.control-input input{
+    border : none
+}

@@ -2,7 +2,8 @@ import * as types from '../actionTypes/userTypes';
 
 const initialState = {
     logined : false,
-    registered : false
+    registered : false,
+    userInfo : []
 };
 
 
@@ -17,7 +18,9 @@ export default (state = initialState, action) => {
                 ...state, logined : true
             };
         case types.LOG_OUT_USER:
-                localStorage.removeItem("JwtToken")
+                localStorage.removeItem("JwtToken");    
+                localStorage.removeItem("userNick")
+                
                 return {
                     ...state, logined : false
                 };
@@ -25,7 +28,10 @@ export default (state = initialState, action) => {
                 return {
                     ...state, registered : true
                 };
-                
+        case types.ADDITIONAL_USER_INFO_SUCCESS:
+                return {
+                    ...state,userInfo : action.payload
+                };
                 
             
             

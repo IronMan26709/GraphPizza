@@ -6,7 +6,10 @@ const initialState = {
     arrayGoods : [],
     arrayCategories : [],
     arrayOrders : [],
-    cart : []
+    cart : [],
+    orderSuccess : false,
+    currentGood : [],
+    getTheGoodDun : true
 };
 
 
@@ -51,10 +54,14 @@ export default (state = initialState, action) => {
         case types.ADD_GOOD_IN_CART:
                 return {
                     ...state,  cart: state.cart.concat( action.payload)
-                };       
+                };     
+        case types.MAKE_ORDER_REQUEST:
+                return {
+                    ...state, orderSuccess : false
+                };            
         case types.MAKE_ORDER_SUCCESS:
                 return {
-                    ...state
+                    ...state, orderSuccess : true, cart : []
                 };           
                  
         case types.CLEAR_ARRAY_GOODS :
@@ -81,9 +88,16 @@ export default (state = initialState, action) => {
         case types.DEL_ONE_ITEM_FROM_CART :
                 return {  ...state, cart : state.cart.filter( el => el._id !== action.payload )
             };
+        case types.GET_CURRENT_GOOD_REQUEST :
+                return {  ...state, currentGood : [],  getTheGoodDun : true
+            };
+        case types.GET_CURRENT_GOOD_SUCCESS :
+                console.log('currentGood',action.payload)
+                return {  ...state, currentGood : action.payload, getTheGoodDun : false
+            };
             
             
-
+            
         default: {
             return state ;
         }

@@ -107,6 +107,21 @@ const makeOrderFail = payload => ({
     payload
 })
 
+const currentGoodSuccessRequest = payload => ({
+    type:types.GET_CURRENT_GOOD_REQUEST,
+    payload
+})
+
+const currentGoodSuccessSuccess = payload => ({
+    type:types.GET_CURRENT_GOOD_SUCCESS,
+    payload
+})
+const currentGoodSuccessFail = payload => ({
+    type:types.GET_CURRENT_GOOD_FAIL,
+    payload
+})
+
+
 
 export const incCountTheItemCart = payload =>({
     type:types.INC_COUNT_ITEM_CART,
@@ -139,6 +154,29 @@ export const addGoodInCart = payload => ({
 
 
 const error1 = "Нет записей"
+
+
+export const getTheGood = payload => async dispatch => {
+    getToken()
+    const Id = payload
+    console.log("payload", Id)
+    const data = await gql.request(
+       ` query ($query : String!){
+            GoodFind(query: $query){
+                _id,
+                name,
+                price
+          }
+        }`,{ query : JSON.stringify([{_id :{ $in : Id }}])
+        }
+    );console.log("goodInCart",data.GoodFind)
+    try { 
+        dispatch(currentGoodSuccessSuccess(data.GoodFind))
+      } catch ( error ) {
+        dispatch(currentGoodSuccessFail( error ));
+      }
+}
+
 
 // export const NewGood = payload => async dispatch => {
 //     dispatch(newGoodRequest())

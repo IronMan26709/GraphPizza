@@ -37,6 +37,20 @@ export const LogOut = () =>({
   type:types.LOG_OUT_USER
 })
 
+const additionalUserInfoRequest = payload => ({
+  type:types.ADDITIONAL_USER_INFO_REQUEST,
+  payload
+})
+const additionalUserInfoSuccess = payload => ({
+  type:types.ADDITIONAL_USER_INFO_SUCCESS,
+  payload
+})
+const additionalUserInfoFail = payload => ({
+  type:types.ADDITIONAL_USER_INFO_FAIL,
+  payload
+})
+
+
 
 
 
@@ -112,18 +126,14 @@ export const Registration = payload => async dispatch => {
             login (login: $login, password: $password)
         }`,
             { login: payload.login, password: payload.password}
-    );
-
-
-
-
-    
+    );    
       try {
 
        if (data.login) 
         {localStorage.setItem("JwtToken", data.login)}
 
         dispatch(LogInSuccess(data.login));
+        dispatch( GetUserInfo ());
       } catch( error ){ 
         dispatch(LogInFail(error))
       }
@@ -140,21 +150,35 @@ export const Registration = payload => async dispatch => {
 
 // Получаем всех юзеров
 
-// export const GetUsersInfo = () => async dispatch => {
-//     getToken();
-//     const data = await gql.request(
-//         `query Users{
-//             UserFind(query:"[{}]"){
-//                   _id,
-//                   login,
-//                   nick,
-//                   createdAt,
-//                   avatar{ _id, url, originalFileName,text} 
-//                 }
-//               }`
-//     );
-//     console.log(data.UserFind)
-// }
+export const GetUserInfo = () => async dispatch => {
+    dispatch(additionalUserInfoRequest())
+    getToken();
+    console.log("localStorage._id",localStorage._id)
+    const data = await gql.request(
+        `query Users ( $query : String ) {
+            UserFindOne(query: $query){
+                  _id,
+                  login,
+                  nick,
+                  createdAt,
+                  avatar{ _id, url, originalFileName,text} 
+                }
+              }`,
+              {
+                query : JSON.stringify([{
+                      _id : localStorage._id
+                }])
+            } 
+    );
+    const dataa = data.UserFindOne.nick
+    console.log("userReducerUserADDinfo", dataa.nick)
+    try {
+      localStorage.setItem("userNick", data.UserFindOne.nick)
+      dispatch(additionalUserInfoSuccess(data.UserFindOne ))
+     } catch( error ){ 
+      dispatch(additionalUserInfoFail(error))
+     }
+}
 
 
 
@@ -167,7 +191,7 @@ export const Registration = payload => async dispatch => {
 // Получаем все товары юзера
 
 
-// export const GetGoods = payload => async dispatch => {
+// .control-input// export const GetGoods = payload => async dispatch => {
 //     getToken();
 //     const data = await gql.request(
 //         `query FindGoods ( $query : String) {
@@ -219,21 +243,6 @@ export const Registration = payload => async dispatch => {
 
 
 // Получаем товар по Id
-// export const GetGoodOnlyOneById = payload => async dispatch => {
-//     getToken()
-//     const Id = payload
-//     console.log("payload", Id)
-//     const data = await gql.request(
-//        ` query ($query : String!){
-//             GoodFindOne(query: $query){
-//                 _id,
-//                 name,
-//                 price
-//           }
-//         }`,{ query : JSON.stringify([{_id :Id}])
-//         }
-//     );console.log(data.GoodFindOne)
-// }
 
 
 // Список товаров конкретного юзера
