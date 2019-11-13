@@ -49,7 +49,7 @@ const Cart = props =>{
             </div>
             
             <div className="action_block_wrap">
-                <button onClick={clickMakeOrder}>Купить</button>
+               {cart.length > 0 &&  <button onClick={clickMakeOrder}>Купить</button>}
                 <button onClick={clearCart}>Очистить карзину</button>
             </div>
         </div>
