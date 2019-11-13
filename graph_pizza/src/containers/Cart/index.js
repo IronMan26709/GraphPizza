@@ -8,11 +8,10 @@ import { makeOrder,
   
 const Cart = props =>{
     const { cart, arrayGoods} = props
-    console.log("arrayGoods",arrayGoods)
     const clickMakeOrder = () =>{
     const cartArray =  cart.map ( orderItem =>  
         ({  "count" : orderItem.count,
-            "order" : { "_id" : orderItem._id }
+            "good" : { "_id" : orderItem._id }
         }) )
     const val = { "orderGoods" : cartArray }                                            
     props.makeOrder(val)

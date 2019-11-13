@@ -30,6 +30,12 @@ const LogInFail = payload => ({
     payload
 })
 
+export const autoLogin = () => ({
+    type:types.AUTO_LOG_IN
+})
+export const LogOut = () =>({
+  type:types.LOG_OUT_USER
+})
 
 
 
@@ -52,6 +58,7 @@ const LogInFail = payload => ({
 
 export const Registration = payload => async dispatch => {
     getToken();
+    dispatch(SignUpRequest());
     const data = await gql.request(
       `mutation reg( $user : UserInput ){
         UserUpsert( user : $user ){
@@ -64,9 +71,8 @@ export const Registration = payload => async dispatch => {
       const result = { id, login };
       dispatch(SignUpSuccess (result));
       localStorage._id = id;
-      dispatch(SignUpRequest(true));
     } catch (er) {
-      dispatch(SignUpFail(true));
+      dispatch(SignUpFail(er));
     }
   };
 
@@ -118,7 +124,6 @@ export const Registration = payload => async dispatch => {
         {localStorage.setItem("JwtToken", data.login)}
 
         dispatch(LogInSuccess(data.login));
-        console.log(data.login);
       } catch( error ){ 
         dispatch(LogInFail(error))
       }
@@ -135,22 +140,21 @@ export const Registration = payload => async dispatch => {
 
 // Получаем всех юзеров
 
-export const GetUsersInfo = () => async dispatch => {
-    getToken();
-    console.log(gql)
-    const data = await gql.request(
-        `query Users{
-            UserFind(query:"[{}]"){
-                  _id,
-                  login,
-                  nick,
-                  createdAt,
-                  avatar{ _id, url, originalFileName,text} 
-                }
-              }`
-    );
-    console.log(data.UserFind)
-}
+// export const GetUsersInfo = () => async dispatch => {
+//     getToken();
+//     const data = await gql.request(
+//         `query Users{
+//             UserFind(query:"[{}]"){
+//                   _id,
+//                   login,
+//                   nick,
+//                   createdAt,
+//                   avatar{ _id, url, originalFileName,text} 
+//                 }
+//               }`
+//     );
+//     console.log(data.UserFind)
+// }
 
 
 
@@ -190,25 +194,25 @@ export const GetUsersInfo = () => async dispatch => {
 
 
 // Получаем катигорию по Id
-export const GetCategoriById = payload => async dispatch => {
-    console.log(payload)
-    getToken()
-    const data = await gql.request(
-        `   query Category ($query : String!) {
-            CategoryFindOne(query:$query){
-              _id,
-              name,
-              goods{
-                name,
-                description,
-                price
-              }
-            }
-          }` 
-          , { query : JSON.stringify([{ _id : payload}]) }
-    );
-    console.log(data)
-}
+// export const GetCategoriById = payload => async dispatch => {
+//     console.log(payload)
+//     getToken()
+//     const data = await gql.request(
+//         `   query Category ($query : String!) {
+//             CategoryFindOne(query:$query){
+//               _id,
+//               name,
+//               goods{
+//                 name,
+//                 description,
+//                 price
+//               }
+//             }
+//           }` 
+//           , { query : JSON.stringify([{ _id : payload}]) }
+//     );
+//     console.log(data)
+// }
 
 
 

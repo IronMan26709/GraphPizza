@@ -4,14 +4,14 @@ import './App.css';
 
 import SignUp  from './containers/SignUpComponent';
 import LogIn  from './containers/LogInComponent';
-import  CreateNewGood  from './containers/createNewGood';
-import CreateNewCategory  from './containers/createNewCategory'
-import ListOfPhotos from './containers/listOfPhotos';
+// import  CreateNewGood  from './containers/createNewGood';
+// import CreateNewCategory  from './containers/createNewCategory'
+// import ListOfPhotos from './containers/listOfPhotos';
 import ListOfGoods from './containers/listOfGoods';
-import ListOfCategories from './containers/listOfCategories';
-import ListOfOrders from './containers/listOfOrders';
+// import ListOfCategories from './containers/listOfCategories';
+// import ListOfOrders from './containers/listOfOrders';
 import  Header  from './containers/Header';
-// import Cart from './containers/Cart';
+import Cart from './containers/Cart';
 
 
 function App() {
@@ -22,22 +22,20 @@ function App() {
           <Route exact path="/" />
           <Route path="/SignUp" component ={SignUp}/>
           <Route path="/LogIn" component ={LogIn}/>
-          <Route path="/CreateNewGood" component ={CreateNewGood}/>
+          {/* <Route path="/CreateNewGood" component ={CreateNewGood}/>
           <Route path="/CreateNewCategory" component ={CreateNewCategory}/>
-          <Route path="/photos" component ={ListOfPhotos}/>
+          <Route path="/photos" component ={ListOfPhotos}/> */}
           {/* <Route path="/goods" component ={ListOfGoods}/> */}
-          <Route path="/categories/" component ={ListOfCategories}/>
-          <Route path="/orders" component ={ListOfOrders}/>
+          {/* <Route path="/categories/" component ={ListOfCategories}/> */}
+          {/* <Route path="/orders" component ={ListOfOrders}/> */}
           <Route path="/goods/:id" component ={ListOfGoods}/>
-          {/* 5dc94bd00e36db246e3049ee */}
           
-          {/* <Route path="/cart" component ={Cart}/> */}
+          <Route path="/cart" component ={Cart}/>
           
 
+          {/* приват : cart */}
           
           
-          
-          {/* <Route exact path="/2" >lorem eg;vhSfivho;iafnkaflesv;baj;wfnsdvpiho;anwf/;sn;cohk;oijk/awmevocio;hubi;dnj</Route> */}
       </Switch>
       <footer>Footer</footer>
     </div>

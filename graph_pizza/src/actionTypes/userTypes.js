@@ -9,12 +9,13 @@ export  const USER_LOG_IN_FAIL = "USER_LOG_IN_FAIL";
 
 
 export const USER_LOG_IN = "USER_LOG_IN";
-
+export const AUTO_LOG_IN = "AUTO_LOG_IN"
 export const USER_UPSERT = "USER_UPSERT";
+export const LOG_OUT_USER = "LOG_OUT_USER"
 
-export const USER_UPSERT_REQUEST = "USER_UPSERT_REQUEST";
-export const USER_UPSERT_SUCCESS = "USER_UPSERT_SUCCESS";
-export const USER_UPSERT_FAIL = "USER_UPSERT_FAIL";
+// export const USER_UPSERT_REQUEST = "USER_UPSERT_REQUEST";
+// export const USER_UPSERT_SUCCESS = "USER_UPSERT_SUCCESS";
+// export const USER_UPSERT_FAIL = "USER_UPSERT_FAIL";
 
 
 

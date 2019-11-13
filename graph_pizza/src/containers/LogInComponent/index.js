@@ -2,6 +2,7 @@ import React,{ useState }  from "react";
 import { connect } from "react-redux";
 import LogInForm from "../../components/forms/LogIn";
 import { Auth } from "../../actions/userAction";
+import  { Redirect } from 'react-router-dom'
 
 // import { GetUsersGoods } from '../../actions/goodAction'
  
@@ -11,7 +12,8 @@ const LogInComponent = props => {
   const handelSubmit = values => {
     props.Auth(values);
   };
-  // const click = () => {
+  if ( props.logined === true ) return <Redirect to="/"/>
+   // const click = () => {
   //   props.GetUsersInfo();
   // // };
   // const clickGoods = () => {
@@ -86,4 +88,8 @@ const mapDispatchToProps = dispatch => ({
   // UserUpsert : e => dispatch( UserUpsert (e))
 });
 
-export default connect( null, mapDispatchToProps )(LogInComponent);
+const mapStateToProps = state =>({
+  logined : state.userReducer.logined
+})
+
+export default connect( mapStateToProps, mapDispatchToProps )(LogInComponent);
