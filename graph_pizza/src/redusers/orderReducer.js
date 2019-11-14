@@ -9,7 +9,7 @@ const initialState = {
     cart : [],
     orderSuccess : false,
     currentGood : [],
-    getTheGoodDun : true
+    getTheGoodDun : false,
 };
 
 
@@ -88,15 +88,17 @@ export default (state = initialState, action) => {
         case types.DEL_ONE_ITEM_FROM_CART :
                 return {  ...state, cart : state.cart.filter( el => el._id !== action.payload )
             };
+
+        case types.DEL_THE_ITEM_FROM_CURRENTGOOD_ARRAY :
+                return {  ...state, currentGood : state.currentGood.filter( el => el._id !== action.payload )
+            };
         case types.GET_CURRENT_GOOD_REQUEST :
-                return {  ...state, currentGood : [],  getTheGoodDun : true
+                return {  ...state,
             };
         case types.GET_CURRENT_GOOD_SUCCESS :
-                console.log('currentGood',action.payload)
-                return {  ...state, currentGood : action.payload, getTheGoodDun : false
+                return {  ...state, currentGood : action.payload, getTheGoodDun : true
             };
-            
-            
+        
             
         default: {
             return state ;

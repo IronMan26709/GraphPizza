@@ -137,7 +137,10 @@ export const delTheItemfromCart = payload => ({
     type:types.DEL_ONE_ITEM_FROM_CART,
     payload
 })
-
+export const delTheItemfromCurrentGoodArray = payload =>({
+    type:types.DEL_THE_ITEM_FROM_CURRENTGOOD_ARRAY,
+    payload
+})
 
 
 
@@ -153,13 +156,16 @@ export const addGoodInCart = payload => ({
 })
 
 
+
+
 const error1 = "Нет записей"
 
 
 export const getTheGood = payload => async dispatch => {
     getToken()
+    dispatch(currentGoodSuccessRequest())
+    console.log("click", payload)
     const Id = payload
-    console.log("payload", Id)
     const data = await gql.request(
        ` query ($query : String!){
             GoodFind(query: $query){
@@ -169,7 +175,7 @@ export const getTheGood = payload => async dispatch => {
           }
         }`,{ query : JSON.stringify([{_id :{ $in : Id }}])
         }
-    );console.log("goodInCart",data.GoodFind)
+    );
     try { 
         dispatch(currentGoodSuccessSuccess(data.GoodFind))
       } catch ( error ) {

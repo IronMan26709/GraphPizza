@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { GetUsersGoods } from '../../actions/goodAction';
 import  GoodComponent  from '../../containers/GoodComponent';
+import './listOfGoods.css'
 
 const ListOfGoods = props =>  {
     

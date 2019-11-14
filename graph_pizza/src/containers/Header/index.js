@@ -11,7 +11,6 @@ import cartImg from '../../img/cart-4.png';
 const Header = props => {
     const { logined, cart, userInfo } = props
     const userNick = localStorage.userNick
-    console.log(logined )
     const count = cart.length 
     const logOut = () =>{
         props.LogOut()

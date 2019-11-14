@@ -5,7 +5,8 @@ import { makeOrder,
          incCountTheItemCart,
          decCountTheItemCart,
          delTheItemfromCart,
-         getTheGood } from '../../actions/goodAction';
+         getTheGood,
+         delTheItemfromCurrentGoodArray } from '../../actions/goodAction';
 import { Redirect } from "react-router-dom"        
 import './Cart.css' 
   
@@ -13,11 +14,10 @@ const Cart = props =>{
     const { cart, arrayGoods, orderSuccess,
         currentGood, getTheGoodDun } = props
     const length = cart.length
-    console.log("currentGood",currentGood,"cart" ,cart)
+
     const IDs = cart.map( goodId => goodId._id )
-    getTheGoodDun && cart.length > 0 &&  props.getTheGood(IDs)
-    // const resArr = currentGood.concat(cart)
-    // console.log("resArr",resArr)
+    !getTheGoodDun && cart.length > 0 &&  props.getTheGood(IDs)
+    
     const clickMakeOrder = () =>{
     const cartArray =  cart.map ( orderItem =>  
         ({  "count" : orderItem.count,
@@ -37,6 +37,7 @@ const Cart = props =>{
     }
     const del = event =>{
         props.delTheItemfromCart(event.target.id)
+        props.delTheItemfromCurrentGoodArray(event.target.id)
     } 
 if ( orderSuccess === true ) { return <Redirect to="/"/> }
     return(
@@ -55,10 +56,10 @@ if ( orderSuccess === true ) { return <Redirect to="/"/> }
                 <div className="counterBlock">
                 { cart && cart.map( el => 
                     <div key={el._id} className="counter">
-                        <div id={el._id} onClick={ id => incr( id ) }> + </div>
+                        <div className="counter_incr_cart" id={el._id} onClick={ id => incr( id ) }> + </div>
                         <div>{el.count}</div>
-                        <div id={el._id} onClick={ id => decr( id ) }> - </div>
-                        <div id={el._id} onClick={ id => del( id ) }> Del </div>                        
+                        <div className="counter_dicr_cart" id={el._id} onClick={ id => decr( id ) }> - </div>
+                        {/* <div className="del_button_the_good_in_cart" id={el._id} onClick={ id => del( id ) }> Del </div>                         */}
                     </div>
                 )  }
                 </div>
@@ -79,7 +80,8 @@ const mapDispatchToProps = dispatch =>({
     incCountTheItemCart : e => dispatch(incCountTheItemCart( e )),
     decCountTheItemCart : e => dispatch(decCountTheItemCart( e )),
     delTheItemfromCart : e => dispatch( delTheItemfromCart( e )),
-    getTheGood : e => dispatch(getTheGood(e))
+    getTheGood : e => dispatch(getTheGood(e)),
+    delTheItemfromCurrentGoodArray : e => dispatch(delTheItemfromCurrentGoodArray( e ))
 })
 
 const mapStateToProps = state =>({

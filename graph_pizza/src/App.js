@@ -12,7 +12,8 @@ import ListOfGoods from './containers/listOfGoods';
 // import ListOfOrders from './containers/listOfOrders';
 import  Header  from './containers/Header';
 import Cart from './containers/Cart';
-import  PrivateRoute  from './PrivatRouter'
+import  PrivateRoute  from './PrivatRouter';
+import { CategoryList } from './containers/CategoryList';
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
     <div className="App">
       <Header/>
       <Switch>
-          <Route exact path="/" />
+          <Route exact path="/"  component={CategoryList}/>
           <Route path="/SignUp" component ={SignUp}/>
           <Route path="/LogIn" component ={LogIn}/>
           {/* <Route path="/CreateNewGood" component ={CreateNewGood}/>
@@ -38,7 +39,7 @@ function App() {
           
           
       </Switch>
-      <footer>Footer</footer>
+      <footer className="footer"/>
     </div>
   );
 }

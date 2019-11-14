@@ -1,0 +1,6 @@
+.list_of_goods{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+

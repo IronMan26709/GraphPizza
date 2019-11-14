@@ -1,0 +1,11 @@
+.category_list{
+    display:flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+ .category_img{
+    width: 100%;
+} 
+.category_img img {
+    width:250px;
+}
