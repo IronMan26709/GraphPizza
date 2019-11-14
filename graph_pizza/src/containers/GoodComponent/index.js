@@ -34,7 +34,7 @@ const GoodComponent = props =>{
                                     key={img._id}
                                     alt="good"
                                     src={`http://shop-roles.asmer.fs.a-level.com.ua/${img.url}`} />
-                                    }
+                        }
                     </> )} 
                 </div> }
             </div>

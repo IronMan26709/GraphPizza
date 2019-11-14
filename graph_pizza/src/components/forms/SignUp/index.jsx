@@ -32,7 +32,7 @@ const SignUpForm = props =>{
                 className="signup-input"
                 type="password"
             />
-            <Button text="Регистрация"/>
+            <Button type="login_btn"  text="Регистрация"/>
         </form>
     )
 }

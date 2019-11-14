@@ -3,24 +3,28 @@ import * as types from '../actionTypes/userTypes';
 const initialState = {
     logined : false,
     registered : false,
-    userInfo : []
+    userInfo : [],
+    error : false
 };
-
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case types.USER_LOG_IN_SUCCESS:
             return {
-                ...state, logined : true
+                ...state, logined : true, error : false
             };
+        case types.USER_LOG_IN_FAIL:
+            console.log("eror")
+                return {
+                    ...state, error : true
+                };    
         case types.AUTO_LOG_IN:
             return {
-                ...state, logined : true
+                ...state, logined : true 
             };
         case types.LOG_OUT_USER:
                 localStorage.removeItem("JwtToken");    
                 localStorage.removeItem("userNick")
-                
                 return {
                     ...state, logined : false
                 };

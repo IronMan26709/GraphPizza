@@ -1,9 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-
-
 import { renderField } from '../../renderField';
 import Button from '../../Button/Button';
+import './login_form.css';
 
 
 const LogInForm = props =>{
@@ -24,7 +23,7 @@ const LogInForm = props =>{
                 className="signup-input"
                 type="password"
             />
-            <Button text="Войти"/>
+            <Button type="login_btn"  text="Войти"/>
         </form>
     )
 }

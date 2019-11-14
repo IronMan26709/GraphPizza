@@ -51,3 +51,8 @@
 .counterBlock.counter {
     margin-bottom: 10px;
 }
+.empty{
+    display: block;
+    margin-top: 20px;
+    font-size: 20px;
+}

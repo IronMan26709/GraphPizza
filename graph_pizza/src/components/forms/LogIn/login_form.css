@@ -1,0 +1,8 @@
+.login_btn{
+    width: 90px;
+    height: 25px;
+    background: #E37E24;
+    color:white;
+    border-radius: 5px;
+    outline: none;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import  Cart  from '../Cart';
 import { connect } from 'react-redux';
 import { LogOut } from '../../actions/userAction';
 import './Header.css';
@@ -17,14 +16,11 @@ const Header = props => {
     }
     return(
         <header className="header_wrap">
-            
-            {/* { logined && <Cart/>} */}
-          
             <div className="admin_bord">
                 <ul>
-    { logined && <li className="admin_btn" onClick={()=>logOut()} ><div className="linc">Выйти</div></li> }    
-{ logined  ? <li className="admin_btn">{userNick}</li> : <li className="admin_btn" ><Link to="/login"><div className="linc">Войти</div ></Link></li>} 
-{ !logined && <li className="admin_btn" ><Link to="/SignUp"><div className="linc">Регистрация</div></Link></li> }   
+                    { logined && <li className="admin_btn" onClick={()=>logOut()} ><div className="linc">Выйти</div></li> }    
+                    { logined  ? userNick !== null && <li className="admin_btn">{userNick}</li> : <li className="admin_btn" ><Link to="/login"><div className="linc">Войти</div ></Link></li>} 
+                    { !logined && <li className="admin_btn" ><Link to="/SignUp"><div className="linc">Регистрация</div></Link></li> }   
                 </ul> 
             </div>
             
@@ -40,7 +36,6 @@ const Header = props => {
                     <li><Link to="/goods/5dcac6cf6d09c45440d14cfd"> Напитки </Link></li>
                     <li><Link to="/goods/5dcacaeb6d09c45440d14d04"> Салаты </Link></li>
                     <li><Link to="/goods/5dcadc906d09c45440d14d11"> Суши </Link></li>
-                    
                 </ul>
             </div>
         </header>

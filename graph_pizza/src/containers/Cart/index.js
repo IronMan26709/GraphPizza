@@ -11,7 +11,7 @@ import { Redirect } from "react-router-dom"
 import './Cart.css' 
   
 const Cart = props =>{
-    const { cart, arrayGoods, orderSuccess,
+    const { cart, orderSuccess,
         currentGood, getTheGoodDun } = props
     const length = cart.length
 
@@ -39,11 +39,11 @@ const Cart = props =>{
         props.delTheItemfromCart(event.target.id)
         props.delTheItemfromCurrentGoodArray(event.target.id)
     } 
-if ( orderSuccess === true ) { return <Redirect to="/"/> }
+    if ( orderSuccess === true ) { return <Redirect to="/"/> }
     return(
         <div className="cart_wrap">
            { length === 0 && <div className="carts_header">
-                <span>
+                <span className="empty">
                     Пока нет товаров
                 </span>
             </div>}
