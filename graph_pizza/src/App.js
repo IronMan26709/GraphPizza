@@ -1,15 +1,9 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import './App.css';
-
 import SignUp  from './containers/SignUpComponent';
 import LogIn  from './containers/LogInComponent';
-// import  CreateNewGood  from './containers/createNewGood';
-// import CreateNewCategory  from './containers/createNewCategory'
-// import ListOfPhotos from './containers/listOfPhotos';
 import ListOfGoods from './containers/listOfGoods';
-// import ListOfCategories from './containers/listOfCategories';
-// import ListOfOrders from './containers/listOfOrders';
 import  Header  from './containers/Header';
 import Cart from './containers/Cart';
 import  PrivateRoute  from './PrivatRouter';

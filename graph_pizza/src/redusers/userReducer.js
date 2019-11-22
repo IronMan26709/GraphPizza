@@ -14,7 +14,6 @@ export default (state = initialState, action) => {
                 ...state, logined : true, error : false
             };
         case types.USER_LOG_IN_FAIL:
-            console.log("eror")
                 return {
                     ...state, error : true
                 };    
@@ -36,10 +35,6 @@ export default (state = initialState, action) => {
                 return {
                     ...state,userInfo : action.payload
                 };
-                
-            
-            
-        
         default: {
             return state ;
         }

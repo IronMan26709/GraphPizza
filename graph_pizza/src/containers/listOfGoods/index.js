@@ -8,8 +8,8 @@ const ListOfGoods = props =>  {
     
     const[ param , setParam ] = useState( "" )
     const newParam = props.match.params.id
-        if ( props.match.params.id !== param ) {
-            props.GetUsersGoods(props.match.params.id)
+        if ( newParam !== param ) {
+            props.GetUsersGoods(newParam)
             setParam( newParam ) 
         } 
          

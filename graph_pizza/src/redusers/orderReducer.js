@@ -29,10 +29,6 @@ export default (state = initialState, action) => {
             };
         case types.GET_OWN_PHOTOS_FAIL:
             return {  ...state  };
-
-
-            
-
         case types.GET_USERS_GOODS_SUCCESS:
             return {
                 ...state, arrayGoods : action.payload

@@ -1,4 +1,4 @@
-simport * as types from '../actionTypes/userTypes';
+import * as types from '../actionTypes/userTypes';
 import {getToken, gql} from '../graphQl';
 
 
@@ -71,7 +71,6 @@ export const Registration = payload => async dispatch => {
       dispatch(SignUpSuccess (result));
       localStorage._id = id;
     } catch (er) {
-      console.log(er)
       dispatch(SignUpFail(er));
     }
   };
@@ -101,7 +100,6 @@ export const Registration = payload => async dispatch => {
 export const GetUserInfo = () => async dispatch => {
     dispatch(additionalUserInfoRequest())
     getToken();
-    console.log("localStorage._id",localStorage._id)
     const data = await gql.request(
         `query Users ( $query : String ) {
             UserFindOne(query: $query){

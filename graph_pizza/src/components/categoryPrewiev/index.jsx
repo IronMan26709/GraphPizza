@@ -4,7 +4,6 @@ import { GoodPreview } from '../../components/goodPreview'
 
 export const CategoryPreview = props =>{
     const { name, _id, goods } = props.props
-    console.log( "categoryPreview", props.props)
     return(
         <div  className="good_preview_component">
             <div >

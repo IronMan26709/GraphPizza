@@ -1,8 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-// import './SignUp.css';
-
 import { renderField } from '../../renderField';
 import Button from '../../Button/Button';
 
